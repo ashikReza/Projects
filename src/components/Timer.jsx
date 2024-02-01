@@ -159,7 +159,7 @@ const getInitialMinutes = (timerType) => {
     case "pomodoro":
       return 25;
     case "shortBreak":
-      return 1;
+      return 5;
     case "longBreak":
       return 15;
     default:
