@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useTimer } from "../contexts/TimerContext";
-import { getInitialMinutes, getBackgroundColor, getTimerTypeName, getFooterTypeName } from "./timerUtils";
+import { getInitialMinutes, getBackgroundColor, getTimerTypeName, getFooterTypeName } from "./TimerUtils.jsx";
 import clickSound from "../assets/mixkit-fast-double-click-on-mouse-275.mp3";
 
 const Timer = () => {
