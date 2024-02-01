@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 import { useTimer } from "../contexts/TimerContext";
 import { getInitialMinutes, getBackgroundColor, getTimerTypeName, getFooterTypeName } from "./TimerUtils.jsx";
 import clickSound from "../assets/mixkit-fast-double-click-on-mouse-275 (mp3cut.net).mp3";
-import clickSound2 from "../assets/mixkit-fast-small-sweep-transition-166.mp3";
+import clickSound2 from "../assets/mixkit-fast-small-sweep-transition-166 (mp3cut.net).mp3";
 
 const Timer = () => {
   const { timerType, setTimerType } = useTimer();
