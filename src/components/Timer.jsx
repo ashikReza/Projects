@@ -11,17 +11,21 @@ const Timer = () => {
   const [minutes, setMinutes] = useState(getInitialMinutes(timerType));
   const [seconds, setSeconds] = useState(0);
   const [isActive, setIsActive] = useState(false);
+  const [timerStarted, setTimerStarted] = useState(false);
 
   useEffect(() => {
     setMinutes(getInitialMinutes(timerType));
     setSeconds(0);
     setIsActive(false);
+    setTimerStarted(false);
   }, [timerType]);
 
   useEffect(() => {
     let interval;
 
     if (isActive) {
+      setTimerStarted(true); // Set timerStarted to true when the timer is started
+
       interval = setInterval(() => {
         if (seconds === 0) {
           if (minutes === 0) {
@@ -49,6 +53,7 @@ const Timer = () => {
     setMinutes(getInitialMinutes(timerType));
     setSeconds(0);
     setIsActive(false);
+    setTimerStarted(false); // Set timerStarted back to false when the timer is reset
   };
 
   // Define a function to play the click sound
@@ -96,8 +101,11 @@ const Timer = () => {
             {isActive ? "Pause" : "Start"}
           </button>
           <button
-            className="px-5 py-2 bg-green-300 rounded mt-4  font-extrabold"
+            className={`px-5 py-2 bg-green-300 rounded mt-4  font-extrabold ${
+              timerStarted ? "" : "opacity-50 cursor-not-allowed"
+            }`}
             onClick={resetTimer}
+            disabled={!timerStarted}
           >
             Reset
           </button>
