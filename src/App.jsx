@@ -16,17 +16,13 @@ const App = () => {
   return (
     <>
       <TimerProvider>
-        <div className="bg-blue-400 min-h-screen">
-          <Header />
-          <Timer />
-        </div>
+        <Header />
+        <Timer />
       </TimerProvider>
 
       <TaskProvider>
         <TaskBoard />
       </TaskProvider>
-
-    
 
       <ToastContainer position="top-right" autoClose={3000} />
     </>
