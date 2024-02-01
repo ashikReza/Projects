@@ -14,18 +14,17 @@ import TaskBoard from "./components/taskBoard.jsx";
 
 const App = () => {
   return (
-    <>
-      <Header />
-
+    <div id="home">
       <TimerProvider>
         <Timer />
         <TaskProvider>
+          <Header />
           <TaskBoard />
         </TaskProvider>
       </TimerProvider>
 
       <ToastContainer position="top-right" autoClose={3000} />
-    </>
+    </div>
   );
 };
 

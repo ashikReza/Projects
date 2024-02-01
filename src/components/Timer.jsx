@@ -12,6 +12,8 @@ import {
 import clickSound from "../assets/mixkit-fast-double-click-on-mouse-275 (mp3cut.net).mp3";
 import clickSound2 from "../assets/mixkit-fast-small-sweep-transition-166 (mp3cut.net).mp3";
 
+import { GoArrowDown } from "react-icons/go";
+
 const Timer = () => {
   const { timerState, setTimerState } = useTimer();
   const { timerType, minutes, seconds, isActive, timerStarted, progress } =
@@ -175,6 +177,12 @@ const Timer = () => {
         <div className="flex items-center justify-center mt-4 font-semibold ">
           {getFooterTypeName(timerType)}
         </div>
+      </div>
+
+      <div className="absolute bottom-20 hidden sm:block cursor-pointer ">
+        <a href="#tasks">
+          <GoArrowDown className="text-4xl animate-bounce" />
+        </a>
       </div>
     </main>
   );
