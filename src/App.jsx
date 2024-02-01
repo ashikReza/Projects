@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 
 import React from "react";
-import Header from "./components/Header.jsx";
+import Header from "./Header.jsx";
 import Timer from "./components/Timer.jsx";
 import { TimerProvider } from "./contexts/TimerContext.jsx";
 
