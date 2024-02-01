@@ -19,14 +19,14 @@ const Timer = () => {
     setSeconds(0);
     setIsActive(false);
     setTimerStarted(false);
-    setProgress(0); // Reset progress when timer type changes
+    setProgress(0);
   }, [timerType]);
 
   useEffect(() => {
     let interval;
 
     if (isActive) {
-      setTimerStarted(true); // Set timerStarted to true when the timer is started
+      setTimerStarted(true); 
 
       interval = setInterval(() => {
         const totalSeconds = minutes * 60 + seconds;
