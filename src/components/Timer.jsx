@@ -4,7 +4,8 @@
 import React, { useState, useEffect } from "react";
 import { useTimer } from "../contexts/TimerContext";
 import { getInitialMinutes, getBackgroundColor, getTimerTypeName, getFooterTypeName } from "./TimerUtils.jsx";
-import clickSound from "../assets/mixkit-fast-double-click-on-mouse-275.mp3";
+import clickSound from "../assets/mixkit-fast-double-click-on-mouse-275 (mp3cut.net).mp3";
+import clickSound2 from "../assets/mixkit-fast-small-sweep-transition-166.mp3";
 
 const Timer = () => {
   const { timerType, setTimerType } = useTimer();
@@ -57,7 +58,7 @@ const Timer = () => {
 
   const resetTimer = () => {
     // Play the click sound when the button is clicked
-    playClickSound();
+    playClickSound(clickSound);
 
     setMinutes(getInitialMinutes(timerType));
     setSeconds(0);
@@ -67,19 +68,21 @@ const Timer = () => {
   };
 
   // Define a function to play the click sound
-  const playClickSound = () => {
-    const audio = new Audio(clickSound);
+  const playClickSound = (soundFile) => {
+    const audio = new Audio(soundFile);
     audio.play();
   };
 
+
   const toggleTimer = () => {
     // Play the click sound when the button is clicked
-    playClickSound();
+    playClickSound(clickSound);
 
     setIsActive((prevIsActive) => !prevIsActive);
   };
 
-  const switchTimerType = (newType) => {
+  const switchTimerType = (newType, soundFile) => {
+    playClickSound(soundFile);
     setTimerType(newType);
   };
 
@@ -129,19 +132,19 @@ const Timer = () => {
         <div className="flex gap-5 flex-wrap justify-center">
           <button
             className="px-5 py-2 bg-[#fc3030b5] rounded mt-4 text-white font-bold transform hover:scale-125 transition duration-300 ease-in-out"
-            onClick={() => switchTimerType("pomodoro")}
+            onClick={() => switchTimerType("pomodoro", clickSound2)}
           >
             Pomodoro
           </button>
           <button
             className="px-5 py-2 bg-[#1C92FFB0] rounded mt-4 text-white font-bold transform hover:scale-125 transition duration-300 ease-in-out"
-            onClick={() => switchTimerType("shortBreak")}
+            onClick={() => switchTimerType("shortBreak", clickSound2)}
           >
             Short Break
           </button>
           <button
             className="px-5 py-2 bg-[#8FA6AC] rounded mt-4 text-white font-bold transform hover:scale-125 transition duration-300 ease-in-out"
-            onClick={() => switchTimerType("longBreak")}
+            onClick={() => switchTimerType("longBreak", clickSound2)}
           >
             Long Break
           </button>
