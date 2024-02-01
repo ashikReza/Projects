@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useTimer } from "../contexts/TimerContext";
-
+import { getInitialMinutes, getBackgroundColor, getTimerTypeName, getFooterTypeName } from "./timerUtils";
 import clickSound from "../assets/mixkit-fast-double-click-on-mouse-275.mp3";
 
 const Timer = () => {
@@ -128,19 +128,19 @@ const Timer = () => {
         </div>
         <div className="flex gap-5 flex-wrap justify-center">
           <button
-            className="px-5 py-2 bg-[#fc3030b5] rounded mt-4 text-white font-bold"
+            className="px-5 py-2 bg-[#fc3030b5] rounded mt-4 text-white font-bold transform hover:scale-125 transition duration-300 ease-in-out"
             onClick={() => switchTimerType("pomodoro")}
           >
             Pomodoro
           </button>
           <button
-            className="px-5 py-2 bg-[#1C92FFB0] rounded mt-4 text-white font-bold"
+            className="px-5 py-2 bg-[#1C92FFB0] rounded mt-4 text-white font-bold transform hover:scale-125 transition duration-300 ease-in-out"
             onClick={() => switchTimerType("shortBreak")}
           >
             Short Break
           </button>
           <button
-            className="px-5 py-2 bg-[#00D991A1] rounded mt-4 text-white font-bold"
+            className="px-5 py-2 bg-[#00D991A1] rounded mt-4 text-white font-bold transform hover:scale-125 transition duration-300 ease-in-out"
             onClick={() => switchTimerType("longBreak")}
           >
             Long Break
@@ -154,56 +154,5 @@ const Timer = () => {
   );
 };
 
-const getInitialMinutes = (timerType) => {
-  switch (timerType) {
-    case "pomodoro":
-      return 25;
-    case "shortBreak":
-      return 5;
-    case "longBreak":
-      return 15;
-    default:
-      return 25;
-  }
-};
-
-const getBackgroundColor = (timerType) => {
-  switch (timerType) {
-    case "pomodoro":
-      return "bg-pomodoro-bg";
-    case "shortBreak":
-      return "bg-shortBreak-bg";
-    case "longBreak":
-      return "bg-longBreak-bg";
-    default:
-      return "bg-pomodoro-bg";
-  }
-};
-
-const getTimerTypeName = (timerType) => {
-  switch (timerType) {
-    case "pomodoro":
-      return "Pomodoro";
-    case "shortBreak":
-      return "Short Break";
-    case "longBreak":
-      return "Long Break";
-    default:
-      return "Pomodoro";
-  }
-};
-
-const getFooterTypeName = (timerType) => {
-  switch (timerType) {
-    case "pomodoro":
-      return "Time to focus!";
-    case "shortBreak":
-      return "Time for a small break!";
-    case "longBreak":
-      return "Time for a big break!";
-    default:
-      return "Time to focus!";
-  }
-};
 
 export default Timer;
