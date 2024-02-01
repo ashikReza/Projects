@@ -7,13 +7,21 @@ import TaskHeader from "./taskHeader.jsx";
 import TaskList from "./taskList.jsx";
 import TaskModal from "./TaskModal.jsx";
 
+import { useTimer } from "../contexts/TimerContext.jsx";
+import { getBackgroundColor } from "../utils/TimerUtils.jsx";
+
 export default function TaskBoard() {
   const { state } = useTaskContext();
   const { tasks, showAddModal } = state;
 
+  const timerContext = useTimer(); // Use useTimer hook
+  const timerType = timerContext ? timerContext.timerState.timerType : null;
+
   return (
     <section
-      className="py-20 flex justify-center items-center text-white bg-[#191D26] "
+      className={`pb-20 flex justify-center items-center text-white bg-opacity-70 transition-colors duration-500 ${getBackgroundColor(
+        timerType
+      )}`}
       id="tasks"
     >
       {showAddModal && <TaskModal />}

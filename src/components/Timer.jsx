@@ -1,52 +1,68 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useTimer } from "../contexts/TimerContext.jsx";
-import { getInitialMinutes, getBackgroundColor, getTimerTypeName, getFooterTypeName } from "../utils/TimerUtils.jsx";
+import {
+  getInitialMinutes,
+  getBackgroundColor,
+  getTimerTypeName,
+  getFooterTypeName,
+} from "../utils/TimerUtils.jsx";
 import clickSound from "../assets/mixkit-fast-double-click-on-mouse-275 (mp3cut.net).mp3";
 import clickSound2 from "../assets/mixkit-fast-small-sweep-transition-166 (mp3cut.net).mp3";
 
 const Timer = () => {
-  const { timerType, setTimerType } = useTimer();
-  const [minutes, setMinutes] = useState(getInitialMinutes(timerType));
-  const [seconds, setSeconds] = useState(0);
-  const [isActive, setIsActive] = useState(false);
-  const [timerStarted, setTimerStarted] = useState(false);
-  const [progress, setProgress] = useState(0);
+  const { timerState, setTimerState } = useTimer();
+  const { timerType, minutes, seconds, isActive, timerStarted, progress } =
+    timerState;
 
   useEffect(() => {
-    setMinutes(getInitialMinutes(timerType));
-    setSeconds(0);
-    setIsActive(false);
-    setTimerStarted(false);
-    setProgress(0);
+    setTimerState((prevState) => ({
+      ...prevState,
+      minutes: getInitialMinutes(timerType),
+      seconds: 0,
+      isActive: false,
+      timerStarted: false,
+      progress: 0,
+    }));
   }, [timerType]);
 
   useEffect(() => {
     let interval;
 
     if (isActive) {
-      setTimerStarted(true); 
+      setTimerState((prevState) => ({
+        ...prevState,
+        timerStarted: true,
+      }));
 
       interval = setInterval(() => {
         const totalSeconds = minutes * 60 + seconds;
         const elapsedSeconds = getInitialMinutes(timerType) * 60 - totalSeconds;
 
-        setProgress(
-          (elapsedSeconds / (getInitialMinutes(timerType) * 60)) * 100
-        );
+        setTimerState((prevState) => ({
+          ...prevState,
+          progress:
+            (elapsedSeconds / (getInitialMinutes(timerType) * 60)) * 100,
+        }));
 
         if (seconds === 0) {
           if (minutes === 0) {
             // Timer has reached 0
             resetTimer();
           } else {
-            setMinutes((prevMinutes) => prevMinutes - 1);
-            setSeconds(59);
+            setTimerState((prevState) => ({
+              ...prevState,
+              minutes: prevState.minutes - 1,
+              seconds: 59,
+            }));
           }
         } else {
-          setSeconds((prevSeconds) => prevSeconds - 1);
+          setTimerState((prevState) => ({
+            ...prevState,
+            seconds: prevState.seconds - 1,
+          }));
         }
       }, 1000);
     } else {
@@ -60,30 +76,37 @@ const Timer = () => {
     // Play the click sound when the button is clicked
     playClickSound(clickSound);
 
-    setMinutes(getInitialMinutes(timerType));
-    setSeconds(0);
-    setIsActive(false);
-    setTimerStarted(false); // Set timerStarted back to false when the timer is reset
-    setProgress(0); // Reset progress when timer is reset
+    setTimerState((prevState) => ({
+      ...prevState,
+      minutes: getInitialMinutes(timerType),
+      seconds: 0,
+      isActive: false,
+      timerStarted: false,
+      progress: 0,
+    }));
   };
 
-  // Define a function to play the click sound
   const playClickSound = (soundFile) => {
     const audio = new Audio(soundFile);
     audio.play();
   };
 
-
   const toggleTimer = () => {
     // Play the click sound when the button is clicked
     playClickSound(clickSound);
 
-    setIsActive((prevIsActive) => !prevIsActive);
+    setTimerState((prevState) => ({
+      ...prevState,
+      isActive: !prevState.isActive,
+    }));
   };
 
   const switchTimerType = (newType, soundFile) => {
     playClickSound(soundFile);
-    setTimerType(newType);
+    setTimerState((prevState) => ({
+      ...prevState,
+      timerType: newType,
+    }));
   };
 
   return (
@@ -156,6 +179,5 @@ const Timer = () => {
     </main>
   );
 };
-
 
 export default Timer;
