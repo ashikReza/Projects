@@ -23,9 +23,21 @@ export default function TaskList() {
     dispatch({ type: "SHOW_TASK_MODAL", payload: task });
   }
 
+  // function handleFavoriteToggle(taskId) {
+  //   dispatch({ type: "TOGGLE_FAVORITE", payload: taskId });
+  // }
+
   function handleFavoriteToggle(taskId) {
-    dispatch({ type: "TOGGLE_FAVORITE", payload: taskId });
+    const task = tasks.find((task) => task.id === taskId);
+    if (task) {
+      dispatch({ type: "TOGGLE_FAVORITE", payload: taskId });
+      dispatch({
+        type: "TOGGLE_FAVORITE_IN_HEADER",
+        payload: task.isFavorited ? -1 : 1,
+      });
+    }
   }
+  
 
   const handleDeleteTask = (taskId) => {
     setTaskToDelete(taskId);
