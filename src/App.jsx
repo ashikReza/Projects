@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-// App.js
+
 import React from "react";
 import Header from "./components/Header";
 import Timer from "./components/Timer";

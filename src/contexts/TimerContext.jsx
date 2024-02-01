@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react-refresh/only-export-components */
 /* eslint-disable no-unused-vars */
-// TimerContext.js
+
 import React, { createContext, useContext, useState } from 'react';
 
 const TimerContext = createContext();
