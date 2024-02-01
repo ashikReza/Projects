@@ -34,7 +34,7 @@ export default function TaskAction() {
   };
 
   return (
-    <>
+    <div className="w-full flex justify-center my-4 gap-4">
       <button
         className="rounded-md bg-blue-500 px-3.5 py-2.5 text-sm font-semibold"
         onClick={handleAddClick}
@@ -51,7 +51,7 @@ export default function TaskAction() {
         Delete All
       </button>
 
-      <div className="">
+      <div>
         {showPopup && (
           <Popup
             message="Are you sure you want to delete all tasks?"
@@ -60,6 +60,6 @@ export default function TaskAction() {
           />
         )}
       </div>
-    </>
+    </div>
   );
 }

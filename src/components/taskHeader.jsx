@@ -6,9 +6,9 @@ import TaskAction from "./taskAction.jsx";
 
 export default function TaskHeader() {
   return (
-    <div className="mb-14 items-center justify-between sm:flex">
-      <h2 className="text-2xl font-semibold max-sm:mb-4">Your Tasks</h2>
-      <div className="flex items-center space-x-5">
+    <div className="w-full mb-14 items-center justify-between flex-col sm:flex">
+      <h2 className="text-2xl font-semibold max-sm:mb-4 pb-6">Your Tasks</h2>
+      <div className="max-sm:flex-col sm:flex justify-center items-center space-x-5">
         <SearchTask />
 
         <TaskAction />

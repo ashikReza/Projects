@@ -16,7 +16,7 @@ export default function SearchTask() {
 
   return (
     <form onSubmit={handleFormSubmit}>
-      <div className="flex">
+      <div className="flex justify-center">
         <div className="relative overflow-hidden rounded-lg text-gray-50 md:min-w-[380px] lg:min-w-[440px]">
           <input
             type="search"
