@@ -3,9 +3,9 @@
 
 import { useTaskContext } from "../utils/taskUtils";
 
-import TaskHeader from "./taskHeader";
-import TaskList from "./taskList";
-import TaskModal from "./TaskModal";
+import TaskHeader from "./taskHeader.jsx";
+import TaskList from "./taskList.jsx";
+import TaskModal from "./TaskModal.jsx";
 
 export default function TaskBoard() {
   const { state } = useTaskContext();

@@ -4,7 +4,7 @@
 /* eslint-disable react/prop-types */
 
 import { createContext, useReducer } from "react";
-import { reducer, initialState } from "./reducers/TaskReducer";
+import { reducer, initialState } from "./reducers/TaskReducer.jsx";
 
 const TaskContext = createContext();
 

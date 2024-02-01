@@ -5,12 +5,12 @@ import Header from "./Header.jsx";
 import Timer from "./components/Timer.jsx";
 import { TimerProvider } from "./contexts/TimerContext.jsx";
 
-import { TaskProvider } from "./contexts/TaskContext";
+import { TaskProvider } from "./contexts/TaskContext.jsx";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import TaskBoard from "./components/taskBoard";
+import TaskBoard from "./components/taskBoard.jsx";
 
 const App = () => {
   return (

@@ -1,8 +1,8 @@
 /* eslint-disable react/no-unknown-property */
 /* eslint-disable no-unused-vars */
 
-import SearchTask from "./searchTask";
-import TaskAction from "./taskAction";
+import SearchTask from "./searchTask.jsx";
+import TaskAction from "./taskAction.jsx";
 
 export default function TaskHeader() {
   return (

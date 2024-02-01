@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { FaStar } from "react-icons/fa";
-import { useTaskContext } from "../utils/taskUtils";
+import { useTaskContext } from "../utils/taskUtils.jsx";
 
 import { FaSearch } from "react-icons/fa";
 
 import { toast } from "react-toastify";
 
-import Popup from "./Popup";
+import Popup from "./Popup.jsx";
 
 export default function TaskList() {
   const { state, dispatch } = useTaskContext();
