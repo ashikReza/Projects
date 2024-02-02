@@ -21,20 +21,27 @@ const Header = () => {
         </a>
       </div>
 
-      <a href="#tasks" className="relative">
-        {favoriteTasksCount > 0 && (
-          <div className="w-6 h-6 bg-white absolute top-[-0.6rem] right-[-0.5rem] rounded-full flex justify-center items-center">
-            <span className="text-xs text-red-500">{favoriteTasksCount}</span>
+      <div className="flex gap-2">
+        <a href="#tasks" className="relative">
+          <div className="font-extrabold cursor-pointer bg-[#1C92FFB0] px-4 py-2 rounded">
+            Tasks
           </div>
-        )}
+        </a>
+        <a href="#tasks" className="relative">
+          {favoriteTasksCount > 0 && (
+            <div className="w-6 h-6 bg-white absolute top-[-0.6rem] right-[-0.5rem] rounded-full flex justify-center items-center">
+              <span className="text-xs text-red-500">{favoriteTasksCount}</span>
+            </div>
+          )}
 
-        <div
-          className="font-extrabold cursor-pointer bg-[#1C92FFB0] px-4 py-2 rounded"
-          onClick={handleToggleShowFavorites}
-        >
-          {showOnlyFavorites ? "All tasks" : "Favorite tasks"}
-        </div>
-      </a>
+          <div
+            className="font-extrabold cursor-pointer bg-[#1C92FFB0] px-4 py-2 rounded"
+            onClick={handleToggleShowFavorites}
+          >
+            {showOnlyFavorites ? "All tasks" : "Favorite tasks"}
+          </div>
+        </a>
+      </div>
     </header>
   );
 };
