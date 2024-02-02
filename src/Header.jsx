@@ -31,7 +31,7 @@ const Header = () => {
           <>
             {favoriteTasksCount > 0 && (
               <div className="w-6 h-6 bg-white absolute top-[-0.6rem] right-[-0.5rem] rounded-full flex justify-center items-center">
-                <span className="text-xs text-red-500">
+                <span className="text-xs text-black font-bold">
                   {favoriteTasksCount}
                 </span>
               </div>
