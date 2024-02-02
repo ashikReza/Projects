@@ -1,5 +1,4 @@
 import logo from "./assets/Screenshot_2024-02-01_231628-removebg-preview.png";
-
 import { useTaskContext } from "./utils/taskUtils.jsx";
 
 const Header = () => {
@@ -27,19 +26,26 @@ const Header = () => {
             Tasks
           </div>
         </a>
-        <a href="#tasks" className="relative">
-          {favoriteTasksCount > 0 && (
-            <div className="w-6 h-6 bg-white absolute top-[-0.6rem] right-[-0.5rem] rounded-full flex justify-center items-center">
-              <span className="text-xs text-red-500">{favoriteTasksCount}</span>
-            </div>
-          )}
 
-          <div
-            className="font-extrabold cursor-pointer bg-[#1C92FFB0] px-4 py-2 rounded"
-            onClick={handleToggleShowFavorites}
-          >
-            {showOnlyFavorites ? "All tasks" : "Favorite tasks"}
-          </div>
+        <a href="#tasks" className="relative">
+          <>
+            {favoriteTasksCount > 0 && (
+              <div className="w-6 h-6 bg-white absolute top-[-0.6rem] right-[-0.5rem] rounded-full flex justify-center items-center">
+                <span className="text-xs text-red-500">
+                  {favoriteTasksCount}
+                </span>
+              </div>
+            )}
+
+            <div
+              className={`font-extrabold cursor-pointer bg-[#1C92FFB0] px-4 py-2 rounded ${
+                favoriteTasksCount === 0 ? "opacity-60 cursor-not-allowed" : ""
+              }`}
+              onClick={handleToggleShowFavorites}
+            >
+              {showOnlyFavorites ? "All tasks" : "Favorite tasks"}
+            </div>
+          </>
         </a>
       </div>
     </header>
