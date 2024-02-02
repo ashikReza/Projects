@@ -1,9 +1,16 @@
+import { useState, useEffect } from "react";
 import logo from "./assets/Screenshot_2024-02-01_231628-removebg-preview.png";
 import { useTaskContext } from "./utils/taskUtils.jsx";
 
 const Header = () => {
   const { state, dispatch } = useTaskContext();
   const { favoriteTasksCount, showOnlyFavorites } = state;
+
+  const [countVisible, setCountVisible] = useState(false);
+
+  useEffect(() => {
+    setCountVisible(favoriteTasksCount > 0 && !showOnlyFavorites);
+  }, [favoriteTasksCount, showOnlyFavorites]);
 
   const handleToggleShowFavorites = () => {
     dispatch({ type: "TOGGLE_SHOW_FAVORITES" });
@@ -29,7 +36,7 @@ const Header = () => {
 
         <a href="#tasks" className="relative">
           <>
-            {favoriteTasksCount > 0 && (
+            {countVisible && (
               <div className="w-6 h-6 bg-white absolute top-[-0.6rem] right-[-0.5rem] rounded-full flex justify-center items-center z-20">
                 <span className="text-xs text-black font-bold">
                   {favoriteTasksCount}
