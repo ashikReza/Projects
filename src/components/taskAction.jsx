@@ -24,6 +24,17 @@ export default function TaskAction() {
   };
 
   const handleConfirmDeleteAll = () => {
+    const favoritedTasksCount = state.tasks.reduce(
+      (count, task) => (task.isFavorited ? count + 1 : count),
+      0
+    );
+
+    // Decrease the count by the number of favorited tasks
+    dispatch({
+      type: "UPDATE_FAVORITE_COUNT_IN_HEADER",
+      payload: state.favoriteTasksCount - favoritedTasksCount,
+    });
+
     dispatch({ type: "DELETE_ALL_TASKS" });
     toast.success("All tasks deleted successfully ");
     setShowPopup(false);

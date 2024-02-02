@@ -27,16 +27,16 @@ export default function TaskList() {
 
   function handleFavoriteToggle(taskId) {
     const task = tasks.find((task) => task.id === taskId);
-  
+
     if (task) {
       // Toggle favorite status
       dispatch({ type: "TOGGLE_FAVORITE", payload: taskId });
-  
+
       // If currently showing only favorites, toggle back to showing all tasks
       if (showOnlyFavorites) {
         dispatch({ type: "TOGGLE_SHOW_FAVORITES" });
       }
-  
+
       // Update the count in the header
       const updatedCount = task.isFavorited ? -1 : 1;
       dispatch({
@@ -45,7 +45,6 @@ export default function TaskList() {
       });
     }
   }
-  
 
   const handleDeleteTask = (taskId) => {
     setTaskToDelete(taskId);
@@ -53,6 +52,16 @@ export default function TaskList() {
   };
 
   const handleConfirmDeleteTask = () => {
+    const task = state.tasks.find((task) => task.id === taskToDelete);
+
+    if (task && task.isFavorited) {
+      // If the deleted task was favorited, decrease the count
+      dispatch({
+        type: "UPDATE_FAVORITE_COUNT_IN_HEADER",
+        payload: state.favoriteTasksCount - 1,
+      });
+    }
+
     dispatch({ type: "DELETE_TASK", payload: taskToDelete });
     toast.success("Task deleted successfully ");
     setShowDeletePopup(false);
