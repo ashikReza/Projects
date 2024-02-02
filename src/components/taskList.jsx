@@ -27,22 +27,25 @@ export default function TaskList() {
 
   function handleFavoriteToggle(taskId) {
     const task = tasks.find((task) => task.id === taskId);
-
+  
     if (task) {
+      // Toggle favorite status
       dispatch({ type: "TOGGLE_FAVORITE", payload: taskId });
-
+  
       // If currently showing only favorites, toggle back to showing all tasks
       if (showOnlyFavorites) {
         dispatch({ type: "TOGGLE_SHOW_FAVORITES" });
       }
-
+  
       // Update the count in the header
+      const updatedCount = task.isFavorited ? -1 : 1;
       dispatch({
         type: "UPDATE_FAVORITE_COUNT_IN_HEADER",
-        payload: task.isFavorited ? -1 : 1,
+        payload: state.favoriteTasksCount + updatedCount,
       });
     }
   }
+  
 
   const handleDeleteTask = (taskId) => {
     setTaskToDelete(taskId);

@@ -74,12 +74,21 @@ export const reducer = (state, action) => {
         ...state,
         favoriteTasksCount: state.favoriteTasksCount + action.payload,
       };
-    // Add a new case for toggling between showing all tasks and favorited tasks
-    case "TOGGLE_SHOW_FAVORITES":
+    case "TOGGLE_SHOW_FAVORITES": {
+      const newShowOnlyFavorites = !state.showOnlyFavorites;
+      const favoriteTasksCount = newShowOnlyFavorites
+        ? state.tasks.reduce(
+            (count, task) => (task.isFavorited ? count + 1 : count),
+            0
+          )
+        : state.favoriteTasksCount;
+
       return {
         ...state,
-        showOnlyFavorites: !state.showOnlyFavorites,
+        showOnlyFavorites: newShowOnlyFavorites,
+        favoriteTasksCount,
       };
+    }
     case "UPDATE_FAVORITE_COUNT_IN_HEADER":
       return {
         ...state,
