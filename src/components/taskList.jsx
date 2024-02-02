@@ -32,17 +32,28 @@ export default function TaskList() {
       // Toggle favorite status
       dispatch({ type: "TOGGLE_FAVORITE", payload: taskId });
 
-      // If currently showing only favorites, toggle back to showing all tasks
+      // If currently showing only favorites, check updated count
       if (showOnlyFavorites) {
-        dispatch({ type: "TOGGLE_SHOW_FAVORITES" });
-      }
+        const updatedCount = task.isFavorited
+          ? state.favoriteTasksCount - 1
+          : state.favoriteTasksCount;
+        dispatch({
+          type: "UPDATE_FAVORITE_COUNT_IN_HEADER",
+          payload: updatedCount,
+        });
 
-      // Update the count in the header
-      const updatedCount = task.isFavorited ? -1 : 1;
-      dispatch({
-        type: "UPDATE_FAVORITE_COUNT_IN_HEADER",
-        payload: state.favoriteTasksCount + updatedCount,
-      });
+        // If the count becomes 0, switch to showing all tasks
+        if (updatedCount === 0) {
+          dispatch({ type: "TOGGLE_SHOW_FAVORITES" });
+        }
+      } else {
+        // Update the count in the header
+        const updatedCount = task.isFavorited ? -1 : 1;
+        dispatch({
+          type: "UPDATE_FAVORITE_COUNT_IN_HEADER",
+          payload: state.favoriteTasksCount + updatedCount,
+        });
+      }
     }
   }
 
