@@ -1,3 +1,1 @@
-# The repository is for my React/Next Js projects
-
-
+# The repository is designed to housing my React/Next.js projects
