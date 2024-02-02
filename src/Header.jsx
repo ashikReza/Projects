@@ -46,7 +46,7 @@ const Header = () => {
         <a href="#tasks" className="relative">
           <>
             {countVisible && (
-              <div className="w-6 h-6 bg-white absolute top-[-0.6rem] right-[-0.5rem] rounded-full flex justify-center items-center z-20">
+              <div className="w-6 h-6 bg-white absolute top-[-0.6rem] right-[-0.5rem] rounded-full flex justify-center items-center z-20 animate-pulse">
                 <span className="text-xs text-black font-bold">
                   {favoriteTasksCount}
                 </span>
