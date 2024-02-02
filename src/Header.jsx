@@ -20,31 +20,31 @@ const Header = () => {
         </a>
       </div>
 
-      <div className="flex gap-2">
+      <div className="flex gap-4 sm:gap-5">
         <a href="#tasks" className="relative">
-          <div className="font-extrabold cursor-pointer bg-[#1C92FFB0] px-4 py-2 rounded">
+          <button className="font-extrabold cursor-pointer bg-[#1C92FFB0] px-4 py-2 rounded transform hover:scale-90 transition duration-300 ease-in-out">
             Tasks
-          </div>
+          </button>
         </a>
 
         <a href="#tasks" className="relative">
           <>
             {favoriteTasksCount > 0 && (
-              <div className="w-6 h-6 bg-white absolute top-[-0.6rem] right-[-0.5rem] rounded-full flex justify-center items-center">
+              <div className="w-6 h-6 bg-white absolute top-[-0.6rem] right-[-0.5rem] rounded-full flex justify-center items-center z-20">
                 <span className="text-xs text-black font-bold">
                   {favoriteTasksCount}
                 </span>
               </div>
             )}
 
-            <div
+            <button
               className={`font-extrabold cursor-pointer bg-[#1C92FFB0] px-4 py-2 rounded ${
                 favoriteTasksCount === 0 ? "opacity-60 cursor-not-allowed" : ""
-              }`}
+              } transform hover:scale-90 transition duration-300 ease-in-out`}
               onClick={handleToggleShowFavorites}
             >
               {showOnlyFavorites ? "All tasks" : "Favorite tasks"}
-            </div>
+            </button>
           </>
         </a>
       </div>
