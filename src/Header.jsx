@@ -14,6 +14,15 @@ const Header = () => {
 
   const handleToggleShowFavorites = () => {
     dispatch({ type: "TOGGLE_SHOW_FAVORITES" });
+
+    // If showing all tasks, update the count in the header
+    if (!showOnlyFavorites) {
+      const updatedCount = showOnlyFavorites ? 0 : favoriteTasksCount;
+      dispatch({
+        type: "UPDATE_FAVORITE_COUNT_IN_HEADER",
+        payload: updatedCount,
+      });
+    }
   };
 
   return (

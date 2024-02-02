@@ -80,6 +80,11 @@ export const reducer = (state, action) => {
         ...state,
         showOnlyFavorites: !state.showOnlyFavorites,
       };
+    case "UPDATE_FAVORITE_COUNT_IN_HEADER":
+      return {
+        ...state,
+        favoriteTasksCount: action.payload,
+      };
     default:
       return state;
   }

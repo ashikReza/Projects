@@ -15,12 +15,6 @@ export default function TaskList() {
   const [showDeletePopup, setShowDeletePopup] = useState(false);
   const [taskToDelete, setTaskToDelete] = useState(null);
 
-  // const [showOnlyFavorites, setShowOnlyFavorites] = useState(false); // Add this line
-
-  // const filteredTasks = tasks.filter((task) =>
-  //   task.title.toLowerCase().includes(searchQuery.toLowerCase())
-  // );
-
   const filteredTasks = showOnlyFavorites
     ? tasks.filter((task) => task.isFavorited)
     : tasks.filter((task) =>
@@ -31,16 +25,20 @@ export default function TaskList() {
     dispatch({ type: "SHOW_TASK_MODAL", payload: task });
   }
 
-  // function handleFavoriteToggle(taskId) {
-  //   dispatch({ type: "TOGGLE_FAVORITE", payload: taskId });
-  // }
-
   function handleFavoriteToggle(taskId) {
     const task = tasks.find((task) => task.id === taskId);
+
     if (task) {
       dispatch({ type: "TOGGLE_FAVORITE", payload: taskId });
+
+      // If currently showing only favorites, toggle back to showing all tasks
+      if (showOnlyFavorites) {
+        dispatch({ type: "TOGGLE_SHOW_FAVORITES" });
+      }
+
+      // Update the count in the header
       dispatch({
-        type: "TOGGLE_FAVORITE_IN_HEADER",
+        type: "UPDATE_FAVORITE_COUNT_IN_HEADER",
         payload: task.isFavorited ? -1 : 1,
       });
     }
