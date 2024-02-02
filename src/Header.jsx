@@ -45,9 +45,7 @@ const Header = () => {
             )}
 
             <button
-              className={`font-extrabold cursor-pointer bg-[#1C92FFB0] px-4 py-2 rounded ${
-                favoriteTasksCount === 0 ? "opacity-60 cursor-not-allowed" : ""
-              } transform hover:scale-90 transition duration-300 ease-in-out`}
+              className={`font-extrabold cursor-pointer bg-[#1C92FFB0] px-4 py-2 rounded transform hover:scale-90 transition duration-300 ease-in-out`}
               onClick={handleToggleShowFavorites}
             >
               {showOnlyFavorites ? "All tasks" : "Favorite tasks"}
