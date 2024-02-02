@@ -10,14 +10,22 @@ import Popup from "./Popup.jsx";
 
 export default function TaskList() {
   const { state, dispatch } = useTaskContext();
-  const { tasks, searchQuery } = state;
+  const { tasks, searchQuery, showOnlyFavorites } = state;
 
   const [showDeletePopup, setShowDeletePopup] = useState(false);
   const [taskToDelete, setTaskToDelete] = useState(null);
 
-  const filteredTasks = tasks.filter((task) =>
-    task.title.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // const [showOnlyFavorites, setShowOnlyFavorites] = useState(false); // Add this line
+
+  // const filteredTasks = tasks.filter((task) =>
+  //   task.title.toLowerCase().includes(searchQuery.toLowerCase())
+  // );
+
+  const filteredTasks = showOnlyFavorites
+    ? tasks.filter((task) => task.isFavorited)
+    : tasks.filter((task) =>
+        task.title.toLowerCase().includes(searchQuery.toLowerCase())
+      );
 
   function handleEditTask(task) {
     dispatch({ type: "SHOW_TASK_MODAL", payload: task });
@@ -37,7 +45,6 @@ export default function TaskList() {
       });
     }
   }
-  
 
   const handleDeleteTask = (taskId) => {
     setTaskToDelete(taskId);
@@ -152,9 +159,17 @@ export default function TaskList() {
           </tbody>
         ) : (
           <p className="absolute left-1/2 transform -translate-x-1/2 text-white text-center font-bold text-lg sm:text-xl flex items-center gap-2">
-            <FaSearch color="white" /> No tasks found with the provided{" "}
-            <span className="font-bold text-green-400">{searchQuery}</span>{" "}
-            keyword
+            {showOnlyFavorites ? (
+              <>
+                <FaSearch color="white" /> No Favorite tasks found
+              </>
+            ) : (
+              <>
+                <FaSearch color="white" /> No tasks found with the provided{" "}
+                <span className="font-bold text-green-400">{searchQuery}</span>{" "}
+                keyword
+              </>
+            )}
           </p>
         )}
       </table>

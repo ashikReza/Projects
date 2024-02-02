@@ -3,7 +3,7 @@ import deleteLogo from "../assets/delete.svg";
 
 const Popup = ({ message, onConfirm, onCancel, title }) => {
   return (
-    <div className="fixed inset-0 z-10 flex items-center justify-center backdrop-filter backdrop-blur-md mx-4">
+    <div className="fixed  inset-0 z-10 flex items-center justify-center backdrop-filter backdrop-blur-md px-4">
       <div className="bg-gray-500 p-8 rounded-lg shadow-lg drop-animation">
         <div className="flex items-center">
           <img src={deleteLogo} alt="" />

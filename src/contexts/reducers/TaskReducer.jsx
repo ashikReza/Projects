@@ -4,6 +4,7 @@ export const initialState = {
   taskToUpdate: null,
   searchQuery: "",
   favoriteTasksCount: 0,
+  showOnlyFavorites: false,
 };
 
 export const reducer = (state, action) => {
@@ -72,6 +73,12 @@ export const reducer = (state, action) => {
       return {
         ...state,
         favoriteTasksCount: state.favoriteTasksCount + action.payload,
+      };
+    // Add a new case for toggling between showing all tasks and favorited tasks
+    case "TOGGLE_SHOW_FAVORITES":
+      return {
+        ...state,
+        showOnlyFavorites: !state.showOnlyFavorites,
       };
     default:
       return state;
