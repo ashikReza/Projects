@@ -160,19 +160,19 @@ const Timer = () => {
         <div className="flex gap-5 flex-wrap justify-center">
           <button
             className="px-5 py-2 bg-[#fc3030b5] rounded mt-4 text-white font-bold transform hover:scale-125 transition duration-300 ease-in-out"
-            onClick={() => switchTimerType("pomodoro", clickSound2)}
+            onClick={() => switchTimerType("pomodoro")}
           >
             Pomodoro
           </button>
           <button
             className="px-5 py-2 bg-[#1C92FFB0] rounded mt-4 text-white font-bold transform hover:scale-125 transition duration-300 ease-in-out"
-            onClick={() => switchTimerType("shortBreak", clickSound2)}
+            onClick={() => switchTimerType("shortBreak")}
           >
             Short Break
           </button>
           <button
             className="px-5 py-2 bg-[#8FA6AC] rounded mt-4 text-white font-bold transform hover:scale-125 transition duration-300 ease-in-out"
-            onClick={() => switchTimerType("longBreak", clickSound2)}
+            onClick={() => switchTimerType("longBreak")}
           >
             Long Break
           </button>
