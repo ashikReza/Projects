@@ -1,14 +1,13 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 
-// TimerDisplay.jsx
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import "../TimerDisplay.css";
 
 const TimerDisplay = ({ minutes, seconds }) => {
-  const [flipTimer, setFlipTimer] = useState([]);
+  const [flipTimer, setFlipTimer] = React.useState([]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     flipAllCards(minutes, seconds);
   }, [minutes, seconds]);
 
@@ -25,29 +24,73 @@ const TimerDisplay = ({ minutes, seconds }) => {
     <div className="container">
       <div className="container-segment">
         <div className="segment">
-          <div className="flip-card" data-minutes-tens>
-            <div className="top">{flipTimer[0]}</div>
-            <div className="bottom">{flipTimer[0]}</div>
-          </div>
-          <div className="flip-card" data-minutes-ones>
-            <div className="top">{flipTimer[1]}</div>
-            <div className="bottom">{flipTimer[1]}</div>
-          </div>
+          <FlipCard
+            top={flipTimer[0]}
+            bottom={flipTimer[0]}
+            dataKey="minutes-tens"
+          />
+          <FlipCard
+            top={flipTimer[1]}
+            bottom={flipTimer[1]}
+            dataKey="minutes-ones"
+          />
         </div>
       </div>
       <div className="middle-pointer">:</div>
       <div className="container-segment">
         <div className="segment">
-          <div className="flip-card" data-seconds-tens>
-            <div className="top">{flipTimer[2]}</div>
-            <div className="bottom">{flipTimer[2]}</div>
-          </div>
-          <div className="flip-card" data-seconds-ones>
-            <div className="top">{flipTimer[3]}</div>
-            <div className="bottom">{flipTimer[3]}</div>
-          </div>
+          <FlipCard
+            top={flipTimer[2]}
+            bottom={flipTimer[2]}
+            dataKey="seconds-tens"
+          />
+          <FlipCard
+            top={flipTimer[3]}
+            bottom={flipTimer[3]}
+            dataKey="seconds-ones"
+          />
         </div>
       </div>
+    </div>
+  );
+};
+
+const FlipCard = ({ top, bottom, dataKey }) => {
+  const topRef = useRef(null);
+
+  useEffect(() => {
+    if (topRef.current) {
+      const topHalf = topRef.current.querySelector(".top");
+      const bottomHalf = topRef.current.querySelector(".bottom");
+
+      const topFlip = document.createElement("div");
+      topFlip.classList.add("top-flip");
+      const bottomFlip = document.createElement("div");
+      bottomFlip.classList.add("bottom-flip");
+
+      topFlip.textContent = top;
+      bottomFlip.textContent = top;
+
+      topFlip.addEventListener("animationstart", () => {
+        topHalf.textContent = "";
+      });
+      topFlip.addEventListener("animationend", () => {
+        topHalf.textContent = bottom;
+        topFlip.remove();
+      });
+      bottomFlip.addEventListener("animationend", () => {
+        bottomHalf.textContent = bottom;
+        bottomFlip.remove();
+      });
+
+      topRef.current.append(topFlip, bottomFlip);
+    }
+  }, [top, bottom]);
+
+  return (
+    <div className="flip-card" data-key={dataKey} ref={topRef}>
+      <div className="top">{top}</div>
+      <div className="bottom">{bottom}</div>
     </div>
   );
 };
