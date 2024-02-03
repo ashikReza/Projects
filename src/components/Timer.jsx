@@ -14,6 +14,8 @@ import clickSound2 from "../assets/mixkit-fast-small-sweep-transition-166 (mp3cu
 
 import { GoArrowDown } from "react-icons/go";
 
+import TimerDisplay from "./TimerDisplay.jsx";
+
 const Timer = () => {
   const { timerState, setTimerState } = useTimer();
   const { timerType, minutes, seconds, isActive, timerStarted, progress } =
@@ -131,11 +133,12 @@ const Timer = () => {
           </p>
         </div>
         <div className="flex justify-center relative my-5 sm:my-8">
-          <p className="text-4xl font-semibold">
+          {/* <p className="text-4xl font-semibold">
             {`${minutes.toString().padStart(2, "0")}:${seconds
               .toString()
               .padStart(2, "0")}`}
-          </p>
+          </p> */}
+          <TimerDisplay minutes={minutes} seconds={seconds} />
         </div>
         <div className="flex justify-center gap-4 ">
           <button
