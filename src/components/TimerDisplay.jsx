@@ -2,7 +2,7 @@
 /* eslint-disable react/prop-types */
 
 import React, { useRef } from "react";
-import styles from "../TimerDisplay.module.css";
+import styles from "../styles/TimerDisplay.module.css";
 
 const TimerDisplay = ({ minutes, seconds }) => {
   const [flipTimer, setFlipTimer] = React.useState([]);
