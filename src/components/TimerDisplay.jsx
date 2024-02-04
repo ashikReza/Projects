@@ -2,7 +2,7 @@
 /* eslint-disable react/prop-types */
 
 import React, { useEffect, useRef } from "react";
-import "../TimerDisplay.css";
+import styles from "../TimerDisplay.module.css";
 
 const TimerDisplay = ({ minutes, seconds }) => {
   const [flipTimer, setFlipTimer] = React.useState([]);
@@ -21,9 +21,9 @@ const TimerDisplay = ({ minutes, seconds }) => {
   };
 
   return (
-    <div className="container">
-      <div className="container-segment">
-        <div className="segment">
+    <div className={styles.container}>
+      <div className={styles.containerSegment}>
+        <div className={styles.segment}>
           <FlipCard
             top={flipTimer[0]}
             bottom={flipTimer[0]}
@@ -36,9 +36,9 @@ const TimerDisplay = ({ minutes, seconds }) => {
           />
         </div>
       </div>
-      <div className="middle-pointer">:</div>
-      <div className="container-segment">
-        <div className="segment">
+      <div className={styles.middlePointer}>:</div>
+      <div className={styles.containerSegment}>
+        <div className={styles.segment}>
           <FlipCard
             top={flipTimer[2]}
             bottom={flipTimer[2]}
@@ -64,9 +64,9 @@ const FlipCard = ({ top, bottom, dataKey }) => {
       const bottomHalf = topRef.current.querySelector(".bottom");
 
       const topFlip = document.createElement("div");
-      topFlip.classList.add("top-flip");
+      topFlip.classList.add(`${styles.topFlip}`); // Use the CSS module class
       const bottomFlip = document.createElement("div");
-      bottomFlip.classList.add("bottom-flip");
+      bottomFlip.classList.add(`${styles.bottomFlip}`); // Use the CSS module class
 
       topFlip.textContent = top;
       bottomFlip.textContent = top;
@@ -88,9 +88,14 @@ const FlipCard = ({ top, bottom, dataKey }) => {
   }, [top, bottom]);
 
   return (
-    <div className="flip-card" data-key={dataKey} ref={topRef}>
-      <div className="top">{top}</div>
-      <div className="bottom">{bottom}</div>
+    <div
+      className={styles.flipCard}
+      data-key={dataKey}
+      ref={topRef}
+      style={{ fontFamily: "Protest Riot, sans-serif" }}
+    >
+      <div className={styles.top}>{top}</div>
+      <div className={styles.bottom}>{bottom}</div>
     </div>
   );
 };

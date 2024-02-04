@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 /* eslint-disable react-hooks/rules-of-hooks */
 
@@ -45,7 +46,7 @@ export default function TaskAction() {
   };
 
   return (
-    <div className="w-full flex justify-center my-4 gap-4">
+    <div className="w-full flex justify-center my-4 mx-auto gap-4">
       <button
         className="rounded-md bg-blue-500 px-3.5 py-2.5 text-sm font-semibold"
         onClick={handleAddClick}
@@ -62,7 +63,7 @@ export default function TaskAction() {
         Delete All
       </button>
 
-      <div>
+      <>
         {showPopup && (
           <Popup
             message="Are you sure you want to delete all tasks?"
@@ -70,7 +71,7 @@ export default function TaskAction() {
             onCancel={handleCancelDeleteAll}
           />
         )}
-      </div>
+      </>
     </div>
   );
 }

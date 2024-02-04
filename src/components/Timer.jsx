@@ -10,11 +10,11 @@ import {
   getFooterTypeName,
 } from "../utils/TimerUtils.jsx";
 import clickSound from "../assets/mixkit-fast-double-click-on-mouse-275 (mp3cut.net).mp3";
-import clickSound2 from "../assets/mixkit-fast-small-sweep-transition-166 (mp3cut.net).mp3";
 
 import { GoArrowDown } from "react-icons/go";
 
 import TimerDisplay from "./TimerDisplay.jsx";
+
 
 const Timer = () => {
   const { timerState, setTimerState } = useTimer();
