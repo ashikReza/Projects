@@ -16,6 +16,7 @@ const TaskContext = createContext();
 
 export const TaskProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  
   const [loaded, setLoaded] = useState(false); // flag to indicate if tasks have been loaded
   const [favLoaded, setFavLoaded] = useState(false); // flag to indicate if favorite tasks count has been loaded
 
