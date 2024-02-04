@@ -94,6 +94,11 @@ export const reducer = (state, action) => {
         ...state,
         favoriteTasksCount: action.payload,
       };
+    case "LOAD_TASKS":
+      return {
+        ...state,
+        tasks: action.payload,
+      };
     default:
       return state;
   }
