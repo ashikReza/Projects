@@ -40,8 +40,6 @@ import { SingleBlogProvider } from "../context/SingleBlogContext.jsx";
 export default function PrivateRoutes() {
   const { auth } = useAuth();
 
-  console.log(auth.user);
-
   // Check if user is authenticated and extract user's name
   const isAuthenticated = !!auth;
 

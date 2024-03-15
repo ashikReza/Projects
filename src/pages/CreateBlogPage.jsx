@@ -15,7 +15,10 @@ import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 export default function CreateBlog() {
   const { auth } = useAuth();
   const { dispatch } = useBlogs();
-  const { state: profile } = useProfile();
+  const { state: profileState } = useProfile();
+
+  console.log(profileState.user.avatar);
+
   const navigate = useNavigate();
 
   const {
@@ -93,7 +96,7 @@ export default function CreateBlog() {
             createdAt: serverTimestamp(),
             uid: auth.user.uid,
             authorName: auth.user.displayName,
-            authorImg: auth.user.providerData[0].photoURL,
+            authorImg: profileState.user.avatar,
           });
 
           // Dispatch action after successful blog creation

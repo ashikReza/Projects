@@ -4,7 +4,6 @@ const initialState = {
   blogs: [],
   loading: false,
   error: null,
-  page: 1,
 };
 
 const blogsReducer = (state = initialState, action) => {
@@ -19,9 +18,7 @@ const blogsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        blogs:
-          action.page === 1 ? action.blogs : [...state.blogs, ...action.blogs], // Append blogs for subsequent pages
-        page: action.page, // Update current page
+        blogs: action.blogs,
         error: null,
       };
     case actions.blogs.FETCH_BLOGS_FAILURE:
@@ -41,7 +38,9 @@ const blogsReducer = (state = initialState, action) => {
 
     case actions.blogs.POST_DELETED: {
       // Filter out the deleted post by ID
-      const filteredBlogs = state.blogs.filter((item) => item.id !== action.data);
+      const filteredBlogs = state.blogs.filter(
+        (item) => item.id !== action.data
+      );
       return {
         ...state,
         loading: false,

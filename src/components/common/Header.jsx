@@ -7,20 +7,24 @@ import Logout from "../Logout.jsx";
 import { useAuth } from "../../hooks/useAuth.js";
 import usePortal from "../../hooks/usePortal.js";
 
+import { useProfile } from "../../hooks/useProfile.js";
+
 export default function Header() {
   const { auth } = useAuth();
   const { showPortal, togglePortal } = usePortal();
+  const { state } = useProfile();
 
-  console.log(auth.user.uid);
+  console.log(state.user.avatar);
+
+  // console.log(auth.user.uid);
   // console.log(auth.user.proactiveRefresh.user.uid);
 
   /// Extract username and profile URL if auth.user exists
   let displayName = "";
-  let photoURL = "";
+
   if (auth.user) {
     const user = auth.user.providerData[0];
     displayName = user.displayName || "";
-    photoURL = user.photoURL || "";
   }
 
   return (
@@ -54,19 +58,15 @@ export default function Header() {
             </li>
             <li className="flex items-center">
               <div className=" ">
-                {photoURL ? (
-                  <img
-                    className="avater-img"
-                    src={`${import.meta.env.VITE_SERVER_AVATAR_URL}/`}
-                    alt=""
-                  />
+                {state.user.avatar ? (
+                  <img className="avater-img" src={state.user.avatar} alt="" />
                 ) : (
                   <span className="avater-img bg-orange-600 text-white">
                     {displayName ? displayName[0].toUpperCase() : ""}
                   </span>
                 )}
               </div>
-              <Link to={`/profile/${auth?.user?.id}`}>
+              <Link to={`/profile`}>
                 <span className="text-white ml-2">
                   {displayName ? `${displayName}` : ""}
                 </span>
