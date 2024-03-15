@@ -1,13 +1,12 @@
 /* eslint-disable react/no-unknown-property */
-
-import logo from "../../assets/logo.svg";
+import logo from "../../assets/BlogioLogo.png";
 
 export default function Footer() {
   return (
     <footer className="py-6 px-4 md:py-8 bg-[#030317]">
       <div className="container mx-auto flex items-center justify-between">
         <a href="/">
-          <img className="w-28" src={logo} alt="lws" />
+          <img className="w-12 rounded-full" src={logo} alt="lws" />
         </a>
         <ul className="flex items-center space-x-5">
           <li className="text-center">

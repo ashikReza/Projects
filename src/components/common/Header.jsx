@@ -1,4 +1,6 @@
-import logo from "../../assets/logo.svg";
+// import logo from "../../assets/logo.svg";
+import mainLogo from "../../assets/BlogioLogo.png";
+
 import { FcSearch } from "react-icons/fc";
 import { Link } from "react-router-dom";
 import SearchModal from "../SearchModal.jsx";
@@ -13,8 +15,6 @@ export default function Header() {
   const { auth } = useAuth();
   const { showPortal, togglePortal } = usePortal();
   const { state } = useProfile();
-
-  console.log(state.user.avatar);
 
   // console.log(auth.user.uid);
   // console.log(auth.user.proactiveRefresh.user.uid);
@@ -32,7 +32,7 @@ export default function Header() {
       <nav className="container mx-auto bg-black flex flex-col md:flex-row items-center justify-between px-1 py-5 ">
         <div>
           <Link to="/">
-            <img className="w-32" src={logo} alt="lws" />
+            <img className="w-12 rounded-full" src={mainLogo} alt="lws" />
           </Link>
         </div>
         <div>
