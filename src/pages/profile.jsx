@@ -22,30 +22,6 @@ export default function Profile() {
   const { auth } = useAuth();
   const { id } = useParams();
 
-  useEffect(() => {
-    dispatch({ type: actions.profile.DATA_FETCHING });
-    const fetchProfile = async () => {
-      try {
-        const profileResponse = await api.get(
-          `${import.meta.env.VITE_SERVER_BASE_URL}/profile/${id}`
-        );
-        dispatch({
-          type: actions.profile.PROFILE_DATA_FETCHED,
-          user: profileResponse?.data,
-          blogs: profileResponse?.data?.blogs,
-        });
-      } catch (error) {
-        console.error(error);
-        dispatch({
-          type: actions.profile.PROFILE_DATA_FETCH_ERROR,
-          error: error.message,
-        });
-      }
-    };
-
-    fetchProfile();
-  }, [api, auth?.user?.id, dispatch, id]);
-
   if (state?.loading) {
     return (
       <div className="w-full h-screen flex justify-center ">
@@ -71,10 +47,10 @@ export default function Profile() {
           {/* <!-- name , email --> */}
           <div>
             <h3 className="text-2xl font-semibold text-white lg:text-[28px]">
-              {state.user?.firstName} {state.user?.lastName}
+              {auth.user.displayName}
             </h3>
             <p className="leading-[231%] lg:text-lg text-white">
-              {state.user?.email}
+              {auth.user.email}
             </p>
           </div>
 

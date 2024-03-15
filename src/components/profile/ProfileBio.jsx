@@ -1,47 +1,59 @@
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
 import { useProfile } from "../../hooks/useProfile";
 import { MdOutlineEdit } from "react-icons/md";
 import { FaCheck } from "react-icons/fa";
-
 import { actions } from "../../actions/index.js";
-import usetoken from "../../hooks/useToken.js";
-
 import { useAuth } from "../../hooks/useAuth.js";
-
 import { useParams } from "react-router-dom";
+import { doc, getDoc,setDoc } from "firebase/firestore"; // Import necessary Firebase Firestore functions
+import { db } from "../../firebase"; // Assuming you have a firebase.js file where you initialize Firebase
 
 export default function ProfileBio() {
   const { state, dispatch } = useProfile();
-  const { api } = usetoken();
-
   const { auth } = useAuth();
   const { id } = useParams();
+  const [bio, setBio] = useState("");
 
-  const [bio, setBio] = useState(state?.user?.bio);
+  useEffect(() => {
+    const fetchBio = async () => {
+      try {
+        const userDocRef = doc(db, "userBios", auth.user.uid);
+        const docSnap = await getDoc(userDocRef);
+        if (docSnap.exists()) {
+          const userData = docSnap.data();
+          setBio(userData.bio);
+        }
+      } catch (error) {
+        console.error("Error fetching bio:", error);
+      }
+    };
+
+    fetchBio();
+  }, [auth.user.uid]);
+
   const [editMode, setEditMode] = useState(false);
 
-  const handleBioEdit = async () => {
+  useEffect(() => {
+    setBio(state?.user?.bio);
+  }, [state?.user?.bio]);
+
+  const handleBioEdit = async (e) => {
+    e.preventDefault(); // Prevent default form submission behavior
+
     dispatch({ type: actions.profile.DATA_FETCHING });
 
     try {
-      const response = await api.patch(
-        `${import.meta.env.VITE_SERVER_BASE_URL}/profile`, // Endpoint for updating the authenticated user's profile
-        { bio }, // Payload containing the updated bio
-        {
-          headers: {
-            Authorization: `Bearer ${auth?.authToken}`, // Include authorization header
-          },
-        }
-      );
+      // Update user's bio in Firestore
+      const userDocRef = doc(db, "userBios", auth.user.uid);
+      await setDoc(userDocRef, { uid: auth.user.uid, bio });
 
-      if (response.status === 200) {
-        dispatch({
-          type: actions.profile.PROFILE_BIO_EDITED,
-          user: response.data.user,
-        });
-        setEditMode(false); // Disable edit mode on success
-      }
+      // Dispatch action to update state with new bio
+      dispatch({
+        type: actions.profile.PROFILE_BIO_EDITED,
+        user: { ...state.user, bio },
+      });
+
+      setEditMode(false); // Disable edit mode on success
     } catch (err) {
       dispatch({
         type: actions.profile.PROFILE_DATA_FETCH_ERROR,
@@ -56,11 +68,11 @@ export default function ProfileBio() {
       <div className="flex-1">
         {!editMode ? (
           <p className="leading-[188%] text-gray-400 lg:text-lg">
-            {state.user?.bio}
+            {bio}
           </p>
         ) : (
           <textarea
-            className='p-2 className="leading-[188%] text-gray-600 lg:text-lg rounded-md'
+            className="p-2 leading-[188%] text-gray-600 lg:text-lg rounded-md"
             value={bio}
             rows={4}
             cols={55}
