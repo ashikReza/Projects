@@ -12,25 +12,28 @@ import useBlogData from "../../hooks/useBlogData";
 export default function SingleBlogsContent() {
   const { id } = useParams();
 
-  const { blogData, loading, error } = useBlogData(id);
+  const { blogData } = useBlogData(id);
 
-  if (loading) {
-    return (
-      <div className="w-full h-screen flex justify-center">
-        <img src={Load} alt="Loading..." className="" />
-      </div>
-    );
-  }
+  console.log(blogData);
+  console.log(blogData.tags);
 
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+  // if (loading) {
+  //   return (
+  //     <div className="w-full h-screen flex justify-center">
+  //       <img src={Load} alt="Loading..." className="" />
+  //     </div>
+  //   );
+  // }
 
-  if (!blogData) {
-    return <p>No data available for this blog</p>;
-  }
+  // if (error) {
+  //   return <div>Error: {error}</div>;
+  // }
 
-  const tagsArray = blogData.tags?.split(",").map((tag) => tag.trim()) || [];
+  // if (!blogData) {
+  //   return <p>No data available for this blog</p>;
+  // }
+
+  // const tagsArray = blogData.tags?.split(",").map((tag) => tag.trim()) || [];
 
   return (
     <>
@@ -38,15 +41,13 @@ export default function SingleBlogsContent() {
         <div className="w-full flex flex-col justify-center text-center py-8">
           <h1 className="font-bold text-3xl md:text-5xl">{blogData.title}</h1>
           <div className="flex justify-center items-center my-4 gap-4">
-            <Link to={`/profile/${blogData.author.id}`}>
+            <Link to={`/profile/`}>
               <div className="flex items-center capitalize space-x-2">
-                {blogData.author.avatar ? (
+                {blogData.authorImg ? (
                   <>
                     <div className="avater-img bg-indigo-600 text-white">
                       <img
-                        src={`${import.meta.env.VITE_SERVER_AVATAR_URL}/${
-                          blogData.author.avatar
-                        }`}
+                        src={blogData.authorImg}
                         alt=""
                         className="rounded-full"
                       />
@@ -55,37 +56,47 @@ export default function SingleBlogsContent() {
                 ) : (
                   <>
                     <div className="avater-img bg-indigo-600 text-white">
-                      <span className="">
-                        {blogData.author.firstName[0].toUpperCase()}
-                      </span>
+                      {blogData.authorName && (
+                        <span className="">
+                          {blogData.authorName[0].toUpperCase()}
+                        </span>
+                      )}
                     </div>
                   </>
                 )}
 
                 <h5 className="text-slate-500 text-sm">
-                  {blogData.author.firstName} {blogData.author.lastName}
+                  {blogData.authorName}
                 </h5>
               </div>
             </Link>
+            {blogData.createdAt && (
+              <span className="text-sm text-slate-700 dot">
+                {new Date(blogData.createdAt.seconds * 1000).toLocaleDateString(
+                  "en-US",
+                  {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  }
+                )}
+              </span>
+            )}
+
             <span className="text-sm text-slate-700 dot">
-              {new Date(blogData.createdAt).toLocaleDateString()}
-            </span>
-            <span className="text-sm text-slate-700 dot">
-              {blogData.likes.length} Likes
+              {/* {blogData.likes.length} Likes */}
             </span>
           </div>
           <img
             className="mx-auto w-full md:w-8/12 object-cover h-80 md:h-96 rounded"
-            src={`${import.meta.env.VITE_SERVER_BLOG_URL}/${
-              blogData.thumbnail
-            }`}
+            src={blogData.thumbnailUrl}
             alt=""
           />
 
           {/* Tags */}
-          {tagsArray && (
+          {blogData.tags && (
             <ul className="tags">
-              {tagsArray.map((tag, index) => (
+              {blogData.tags.map((tag, index) => (
                 <li key={index}>{tag}</li>
               ))}
             </ul>

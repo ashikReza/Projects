@@ -49,11 +49,11 @@ export default function BlogsContent() {
     <div className="space-y-3 md:col-span-5">
       {state.blogs.map((blog) => (
         <div key={blog.id} className="blog-card">
-          <Link to={`/singleBlog/`}>
+          <Link to={`/singleBlog/${blog.id}`}>
             <img className="blog-thumb" src={blog.thumbnailUrl} alt="" />
           </Link>
           <div className="mt-2 relative">
-            <Link to={`/singleBlog/`}>
+            <Link to={`/singleBlog/${blog.id}`}>
               <h3 className="text-slate-300 text-xl lg:text-2xl">
                 {blog.title}
               </h3>

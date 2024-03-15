@@ -1,31 +1,38 @@
+/* eslint-disable no-unused-vars */
 import { useEffect } from "react";
 import { useBlog } from "../context/SingleBlogContext.jsx";
-import useToken from "./useToken.js";
+
+import { collection, doc, getDoc } from "firebase/firestore";
+import { db } from "../firebase.js";
 
 const useBlogData = (id) => {
   const { state, dispatch } = useBlog();
-  const { api } = useToken();
+
+  console.log(id);
 
   useEffect(() => {
-    const fetchBlogData = async () => {
+    const fetchBlog = async () => {
       try {
-        const response = await api.get(
-          `${import.meta.env.VITE_SERVER_BASE_URL}/blogs/${id}`
-        );
-        if (response.status === 200) {
-          const data = response.data;
-          dispatch({ type: "FETCH_SUCCESS", payload: data });
+        dispatch({ type: "FETCH_START" });
+
+        const blogDocRef = doc(db, "blogs", id);
+        const blogDocSnapshot = await getDoc(blogDocRef);
+
+        if (blogDocSnapshot.exists()) {
+          const blogData = blogDocSnapshot.data();
+          dispatch({ type: "FETCH_SUCCESS", payload: blogData });
         } else {
-          throw new Error(`Request failed with status ${response.status}`);
+          dispatch({ type: "FETCH_ERROR", payload: "Blog not found" });
         }
       } catch (error) {
-        console.error(error);
-        dispatch({ type: "FETCH_ERROR", payload: "Failed to fetch blog data" });
+        dispatch({ type: "FETCH_ERROR", payload: error.message });
       }
     };
 
-    fetchBlogData();
-  }, [api, dispatch, id]);
+    fetchBlog();
+  }, [id, dispatch]);
+
+  console.log(state);
 
   return state;
 };
