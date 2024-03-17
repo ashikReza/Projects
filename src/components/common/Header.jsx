@@ -9,8 +9,11 @@ import Logout from "../Logout";
 import SearchModal from "../SearchModal";
 import usePortal from "../../hooks/usePortal";
 
+import { useParams } from "react-router-dom";
+
 export default function Header() {
   const { auth } = useAuth();
+  const { id } = useParams();
 
   const [userAvatar, setUserAvatar] = useState(null);
   const [authorName, setAuthorName] = useState("");
@@ -20,13 +23,14 @@ export default function Header() {
     const fetchData = async () => {
       try {
         // Fetch user's avatar
-        const usersRef = collection(db, "usersImg");
-        const userQuery = query(usersRef, where("uid", "==", auth.user.uid));
-        const userSnapshot = await getDocs(userQuery);
-        userSnapshot.forEach((doc) => {
-          const userData = doc.data();
-          if (userData && userData.avatar) {
-            setUserAvatar(userData.avatar);
+        const blogsImgRef = collection(db, "blogs");
+        const authorImgQuery = query(blogsImgRef, where("uid", "==", id));
+        const authorImgSnapshot = await getDocs(authorImgQuery);
+
+        authorImgSnapshot.forEach((doc) => {
+          const authorData = doc.data();
+          if (authorData && authorData.authorImg) {
+            setUserAvatar(authorData.authorImg);
           }
         });
 

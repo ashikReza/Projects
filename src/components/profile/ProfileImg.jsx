@@ -28,13 +28,14 @@ export default function ProfileImg() {
 
       try {
         // Fetch user's avatar
-        const usersRef = collection(db, "usersImg");
-        const userQuery = query(usersRef, where("uid", "==", id));
-        const userSnapshot = await getDocs(userQuery);
-        userSnapshot.forEach((doc) => {
-          const userData = doc.data();
-          if (userData && userData.avatar) {
-            setUserAvatar(userData.avatar);
+        const blogsImgRef = collection(db, "blogs");
+        const authorImgQuery = query(blogsImgRef, where("uid", "==", id));
+        const authorImgSnapshot = await getDocs(authorImgQuery);
+
+        authorImgSnapshot.forEach((doc) => {
+          const authorData = doc.data();
+          if (authorData && authorData.authorImg) {
+            setUserAvatar(authorData.authorImg);
           }
         });
 
