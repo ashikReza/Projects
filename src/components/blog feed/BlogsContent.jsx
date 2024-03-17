@@ -44,7 +44,7 @@ export default function BlogsContent() {
     fetchBlogs();
   }, [auth.user.uid, dispatch]);
 
-  // console.log("State blogs:", state.blogs);
+  console.log("State blogs:", state.blogs);
   return (
     <div className="space-y-3 md:col-span-5">
       {state.blogs.map((blog) => (
@@ -63,7 +63,7 @@ export default function BlogsContent() {
               </p>
             </Link>
             <div className="flex justify-between items-center">
-              <Link to={`/profile/`}>
+              <Link to={`/profile/${blog.uid}`}>
                 <div className="flex items-center capitalize space-x-2">
                   {blog.authorImg ? (
                     <img

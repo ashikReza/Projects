@@ -26,7 +26,7 @@ function App() {
       <Routes>
         <Route element={<PrivateRoutes />}>
           <Route element={<Home />} path="/" exact />
-          <Route element={<Profile />} path="/profile" />
+          <Route element={<Profile />} path="/profile/:id" />
           <Route element={<SingleBlog />} path="/singleBlog/:id" />
           <Route element={<CreateBlog />} path="/createBlog/" />
           <Route element={<UpdateBlog />} path="/updateBlog/:id" />

@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useProfile } from "../hooks/useProfile.js";
 import { actions } from "../actions";
 import { motion } from "framer-motion";
@@ -15,12 +15,35 @@ import ProfileBlogs from "../components/profile/ProfileBlogs.jsx";
 
 import { useParams } from "react-router-dom";
 
+import { getDocs, query, collection, where } from "firebase/firestore";
+import { db } from "../firebase.js";
+
 export default function Profile() {
   const { state, dispatch } = useProfile();
 
   const { api } = useToken();
   const { auth } = useAuth();
   const { id } = useParams();
+
+  const [authorName, setAuthorName] = useState("");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Fetch author's name from blogs
+        const blogsRef = collection(db, "blogs");
+        const authorQuery = query(blogsRef, where("uid", "==", id));
+        const authorSnapshot = await getDocs(authorQuery);
+        authorSnapshot.forEach((doc) => {
+          const blogData = doc.data();
+          setAuthorName(blogData.authorName);
+        });
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
+  }, [id]);
 
   if (state?.loading) {
     return (
@@ -47,10 +70,10 @@ export default function Profile() {
           {/* <!-- name , email --> */}
           <div>
             <h3 className="text-2xl font-semibold text-white lg:text-[28px]">
-              {auth.user.displayName}
+              {authorName}
             </h3>
             <p className="leading-[231%] lg:text-lg text-white">
-              {auth.user.email}
+              {auth.user.uid === id && auth.user.email}
             </p>
           </div>
 

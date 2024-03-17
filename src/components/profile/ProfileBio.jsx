@@ -5,7 +5,7 @@ import { FaCheck } from "react-icons/fa";
 import { actions } from "../../actions/index.js";
 import { useAuth } from "../../hooks/useAuth.js";
 import { useParams } from "react-router-dom";
-import { doc, getDoc,setDoc } from "firebase/firestore"; // Import necessary Firebase Firestore functions
+import { doc, getDoc, setDoc } from "firebase/firestore"; // Import necessary Firebase Firestore functions
 import { db } from "../../firebase"; // Assuming you have a firebase.js file where you initialize Firebase
 
 export default function ProfileBio() {
@@ -17,7 +17,7 @@ export default function ProfileBio() {
   useEffect(() => {
     const fetchBio = async () => {
       try {
-        const userDocRef = doc(db, "userBios", auth.user.uid);
+        const userDocRef = doc(db, "userBios", id);
         const docSnap = await getDoc(userDocRef);
         if (docSnap.exists()) {
           const userData = docSnap.data();
@@ -29,7 +29,7 @@ export default function ProfileBio() {
     };
 
     fetchBio();
-  }, [auth.user.uid]);
+  }, [id]);
 
   const [editMode, setEditMode] = useState(false);
 
@@ -67,9 +67,7 @@ export default function ProfileBio() {
     <div className="mt-4 flex items-start gap-2 lg:mt-6">
       <div className="flex-1">
         {!editMode ? (
-          <p className="leading-[188%] text-gray-400 lg:text-lg">
-            {bio}
-          </p>
+          <p className="leading-[188%] text-gray-400 lg:text-lg">{bio}</p>
         ) : (
           <textarea
             className="p-2 leading-[188%] text-gray-600 lg:text-lg rounded-md"
@@ -81,7 +79,7 @@ export default function ProfileBio() {
         )}
       </div>
 
-      {auth?.user?.id === id &&
+      {auth.user.uid === id &&
         (!editMode ? (
           <button
             className="flex-center h-7 w-7 rounded-full"

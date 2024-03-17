@@ -1,35 +1,53 @@
-// import logo from "../../assets/logo.svg";
-import mainLogo from "../../assets/BlogioLogo.png";
-
-import { FcSearch } from "react-icons/fc";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import SearchModal from "../SearchModal.jsx";
-import Logout from "../Logout.jsx";
-
-import { useAuth } from "../../hooks/useAuth.js";
-import usePortal from "../../hooks/usePortal.js";
-
-import { useProfile } from "../../hooks/useProfile.js";
+import { FcSearch } from "react-icons/fc";
+import mainLogo from "../../assets/BlogioLogo.png";
+import { useAuth } from "../../hooks/useAuth";
+import { getDocs, query, collection, where } from "firebase/firestore";
+import { db } from "../../firebase";
+import Logout from "../Logout";
+import SearchModal from "../SearchModal";
+import usePortal from "../../hooks/usePortal";
 
 export default function Header() {
   const { auth } = useAuth();
+
+  const [userAvatar, setUserAvatar] = useState(null);
+  const [authorName, setAuthorName] = useState("");
   const { showPortal, togglePortal } = usePortal();
-  const { state } = useProfile();
 
-  // console.log(auth.user.uid);
-  // console.log(auth.user.proactiveRefresh.user.uid);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Fetch user's avatar
+        const usersRef = collection(db, "usersImg");
+        const userQuery = query(usersRef, where("uid", "==", auth.user.uid));
+        const userSnapshot = await getDocs(userQuery);
+        userSnapshot.forEach((doc) => {
+          const userData = doc.data();
+          if (userData && userData.avatar) {
+            setUserAvatar(userData.avatar);
+          }
+        });
 
-  /// Extract username and profile URL if auth.user exists
-  let displayName = "";
-
-  if (auth.user) {
-    const user = auth.user.providerData[0];
-    displayName = user.displayName || "";
-  }
+        // Fetch author's name from blogs
+        const blogsRef = collection(db, "blogs");
+        const authorQuery = query(blogsRef, where("uid", "==", auth.user.uid));
+        const authorSnapshot = await getDocs(authorQuery);
+        authorSnapshot.forEach((doc) => {
+          const blogData = doc.data();
+          setAuthorName(blogData.authorName);
+        });
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
+  }, [auth.user.uid]);
 
   return (
     <header className="w-full bg-black">
-      <nav className="container mx-auto bg-black flex flex-col md:flex-row items-center justify-between px-1 py-5 ">
+      <nav className="container mx-auto bg-black flex flex-col md:flex-row items-center justify-between px-1 py-5">
         <div>
           <Link to="/">
             <img className="w-12 rounded-full" src={mainLogo} alt="lws" />
@@ -50,32 +68,35 @@ export default function Header() {
                 onClick={togglePortal}
               >
                 <FcSearch size={30} />
-                <span className=" text-white">Search</span>
+                <span className="text-white">Search</span>
               </button>
             </li>
             <li>
               <Logout />
             </li>
             <li className="flex items-center">
-              <div className=" ">
-                {state.user.avatar ? (
-                  <img className="avater-img" src={state.user.avatar} alt="" />
+              <div>
+                {userAvatar ? (
+                  <img
+                    className="avater-img"
+                    src={userAvatar}
+                    alt="User Avatar"
+                  />
                 ) : (
-                  <span className="avater-img bg-orange-600 text-white">
-                    {displayName ? displayName[0].toUpperCase() : ""}
+                  <span className="avatar-img bg-orange-600 text-white">
+                    {authorName ? authorName[0].toUpperCase() : ""}
                   </span>
                 )}
               </div>
-              <Link to={`/profile`}>
+              <Link to={`/profile/${auth.user.uid}`}>
                 <span className="text-white ml-2">
-                  {displayName ? `${displayName}` : ""}
+                  {authorName ? authorName : ""}
                 </span>
               </Link>
             </li>
           </ul>
         </div>
       </nav>
-
       {showPortal && <SearchModal onClose={togglePortal} />}
     </header>
   );
